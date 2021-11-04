@@ -1,3 +1,4 @@
+// Authors: CS 411 b F21 Group 2
 public abstract class Person{
     //person class for the general attributes of the librarian and the borrowers
     protected int id; // the id number for each user
@@ -13,6 +14,10 @@ public abstract class Person{
         password=Integer.toString(id);
         name=n;
         phoneNum=p;
+    }
+
+    public void setName(String name){
+        this.name=name;
     }
 
 }

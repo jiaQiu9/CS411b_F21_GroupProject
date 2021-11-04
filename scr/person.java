@@ -8,6 +8,7 @@ public abstract class Person{
 
     static String currentIdN; // id counter for creating unique id
 
+    // setting inital attributes for the person object
     public Person(int dd, String nam, int pnum)
     {
         currentIdN= nam+Integer.toString(pnum)
@@ -15,7 +16,7 @@ public abstract class Person{
         name=n;
         phoneNum=p;
     }
-
+    // setting the name of the person
     public void setName(String name){
         this.name=name;
     }

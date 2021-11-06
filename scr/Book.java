@@ -11,6 +11,14 @@ public class Book {
     private boolean available;  // True for in library; False for borrowed
     private ArrayList<BorrowRecord> BorrowRecord; // record every person who borrowed this book
 
+    public Book(int bid, String tit, String auth, String gen, boolean avail){
+        bookID=bid;
+        title=tit;
+        author=auth;
+        Genre=gen;
+        available=avail;
+
+    }
 
 
 }

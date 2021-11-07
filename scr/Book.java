@@ -94,6 +94,11 @@ public class Book {
         bookID=loc + Integer.toString(index);
     }
 
+    // chaing the availability of a book according to its status of
+    // being either borrowed(False) and returned/ available(True)
+    public void availBook(){
+
+    }
 
 
 }

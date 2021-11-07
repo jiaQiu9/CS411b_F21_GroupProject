@@ -18,6 +18,15 @@ public abstract class Person{
         name=nam;
         phoneNum=pnum;
     }
+
+    //printing the information of the person
+    public void printInfo(){
+        System.out.println("Information List\n");
+        System.out.println("Identification Number: "+currentIdN);
+        System.out.println("Name of the person: "+ name);
+        System.out.println("Phone number: "+phoneNum+"\n");
+    }
+
     /*setter functions/methods */
 
     // setting the name of the person

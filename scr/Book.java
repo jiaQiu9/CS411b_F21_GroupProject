@@ -20,5 +20,75 @@ public class Book {
 
     }
 
+    // printing book information
+    public void printInfo(){
+        System.out.println("Title: "+title+"\t"+"Author"+author+"\t"+"Genre: "+Genre+"\t Availability: "+available)
+    }
+
+    // chainging book information
+    public void changeBookInfo() {
+        Scanner scanner=new Scanner(System.in);
+        String input;
+
+        BufferedReader reader= new BufferedReader(new InputStreamReader(System.in));
+
+        //asking if the user wants to change the author
+        System.out.println("Update Author? (y/n)\n");
+        input =scanner.next();
+
+        if(input.equals("y")){
+            System.out.println("Enter name of new Author: ");
+            author= reader.readLine();
+        }
+
+        //asking the user is they want to change the genre of the book
+        System.out.println("Update Genre? (y/n)\n");
+        input=scanner.next();
+
+        if(input.equal("y")){
+            System.out.println("Enter new genre: ");
+            Genre=reader.readLine();
+
+        }
+
+        // Asking the user if they want to change the title of the book
+
+        System.out.println("Update title? (y/n)");
+        input=scanner.next();
+
+        if (input.equal("y")){
+            System.out.println("Enter new title: ");
+            title=reader.readLine();
+        }
+
+        System.out.println(" The book is updated with the new information");
+    }
+
+    // getter function for the books
+    public String getTitle(){
+        return title;
+    }
+
+    public String getGenre(){
+        return Genre;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable(){
+        return available;
+    }
+
+    public int getBookID(){
+        return bookID;
+    }
+
+    //setter function
+    public void setAvailable(boolean s){
+        available=s;
+    }
+
 
 }

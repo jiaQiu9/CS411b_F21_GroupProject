@@ -11,9 +11,9 @@ public abstract class Person{
                                 // no space between name and phone number
 
     // setting inital attributes for the person object
-    public Person( String nam, int pnum,int pw)
+    public Person( String nam, int pnum,String pw)
     {
-        currentIdN= nam+Integer.toString(pnum)
+        currentIdN= nam+Integer.toString(pnum);
         password=pw;
         name=nam;
         phoneNum=pnum;
@@ -39,7 +39,7 @@ public abstract class Person{
     }
 
     // setting password
-    public void setPassword(int pw){
+    public void setPassword(String pw){
         password=pw;
     }
 
@@ -56,7 +56,7 @@ public abstract class Person{
     }
 
     // get password function/methods
-    public int getPassword(){
+    public String getPassword(){
         return password;
     }
 

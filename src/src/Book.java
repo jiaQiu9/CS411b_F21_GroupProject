@@ -14,7 +14,7 @@ public class Book {
                             // separated by a semicolon
     private String Genre; // the genre of the book
     private boolean available;  // True for in library; False for borrowed
-    private ArrayList<BorrowRecord> BorrowRecord; // record every person who borrowed this book
+    //private ArrayList<BorrowRecord> BorrowRecord; // record every person who borrowed this book
 
     public Book(String bid, String tit, String auth, String gen, boolean avail){
         bookID=bid;
@@ -27,11 +27,11 @@ public class Book {
 
     // printing book information
     public void printInfo(){
-        System.out.println("Title: "+title+"\t"+"Author"+author+"\t"+"Genre: "+Genre+"\t Availability: "+available)
+        System.out.println("Title: "+title+"\t"+"Author"+author+"\t"+"Genre: "+Genre+"\t Availability: "+available);
     }
 
     // chainging book information
-    public void changeBookInfo() {
+    public void changeBookInfo() throws IOException {
         Scanner scanner=new Scanner(System.in);
         String input;
 
@@ -50,7 +50,7 @@ public class Book {
         System.out.println("Update Genre? (y/n)\n");
         input=scanner.next();
 
-        if(input.equal("y")){
+        if(input.equals("y")){
             System.out.println("Enter new genre: ");
             Genre=reader.readLine();
 
@@ -61,7 +61,7 @@ public class Book {
         System.out.println("Update title? (y/n)");
         input=scanner.next();
 
-        if (input.equal("y")){
+        if (input.equals("y")){
             System.out.println("Enter new title: ");
             title=reader.readLine();
         }
@@ -86,7 +86,7 @@ public class Book {
         return available;
     }
 
-    public int getBookID(){
+    public String getBookID(){
         return bookID;
     }
 

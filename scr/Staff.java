@@ -1,4 +1,3 @@
-package scr;
 public Class Staff extends Person{
     protected double salary;
 

@@ -1,27 +1,27 @@
 // Authors: CS 411 b F21 Group 2
 // The attribute file for the books in the libary
 // each book will have a name, author name, publisher name, and publishing year
-package scr;
 
 import java.io.*;
 import java.util.*;
 
+
 public class Book {
     private String bookID; // ID indexing for library placement
-    private String title; // the title of the book
+    private String title;  // the title of the book
     private String author; // author of the books, for multiple author books
-                           // it will just store the authors in one string
-                           // separated by a semicolon
+                            // it will just store the authors in one string
+                            // separated by a semicolon
     private String Genre; // the genre of the book
-    private boolean available; // True for in library; False for borrowed
+    private boolean available;  // True for in library; False for borrowed
     private ArrayList<BorrowRecord> BorrowRecord; // record every person who borrowed this book
 
-    public Book(String bid, String tit, String auth, String gen, boolean avail) {
-        bookID = bid;
-        title = tit;
-        author = auth;
-        Genre = gen;
-        available = avail;
+    public Book(String bid, String tit, String auth, String gen, boolean avail){
+        bookID=bid;
+        title=tit;
+        author=auth;
+        Genre=gen;
+        available=avail;
 
     }
 
@@ -32,49 +32,49 @@ public class Book {
 
     // chainging book information
     public void changeBookInfo() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner=new Scanner(System.in);
         String input;
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader= new BufferedReader(new InputStreamReader(System.in));
 
-        // asking if the user wants to change the author
+        //asking if the user wants to change the author
         System.out.println("Update Author? (y/n)\n");
-        input = scanner.next();
+        input =scanner.next();
 
-        if (input.equals("y")) {
+        if(input.equals("y")){
             System.out.println("Enter name of new Author: ");
-            author = reader.readLine();
+            author= reader.readLine();
         }
 
-        // asking the user is they want to change the genre of the book
+        //asking the user is they want to change the genre of the book
         System.out.println("Update Genre? (y/n)\n");
-        input = scanner.next();
+        input=scanner.next();
 
-        if (input.equal("y")) {
+        if(input.equal("y")){
             System.out.println("Enter new genre: ");
-            Genre = reader.readLine();
+            Genre=reader.readLine();
 
         }
 
         // Asking the user if they want to change the title of the book
 
         System.out.println("Update title? (y/n)");
-        input = scanner.next();
+        input=scanner.next();
 
-        if (input.equal("y")) {
+        if (input.equal("y")){
             System.out.println("Enter new title: ");
-            title = reader.readLine();
+            title=reader.readLine();
         }
 
         System.out.println(" The book is updated with the new information");
     }
 
     // getter function for the books
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
 
-    public String getGenre() {
+    public String getGenre(){
         return Genre;
     }
 
@@ -82,27 +82,28 @@ public class Book {
         return author;
     }
 
-    public boolean isAvailable() {
+    public boolean isAvailable(){
         return available;
     }
 
-    public int getBookID() {
+    public int getBookID(){
         return bookID;
     }
 
-    // setter function
-    public void setAvailable(boolean s) {
-        available = s;
+    //setter function
+    public void setAvailable(boolean s){
+        available=s;
     }
 
-    public void setBookID(String loc, int index) {
-        bookID = loc + Integer.toString(index);
+    public void setBookID(String loc, int index){
+        bookID=loc + Integer.toString(index);
     }
 
     // chaing the availability of a book according to its status of
     // being either borrowed(False) and returned/ available(True)
-    public void availBook() {
+    public void availBook(){
 
     }
+
 
 }

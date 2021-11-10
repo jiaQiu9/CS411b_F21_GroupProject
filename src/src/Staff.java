@@ -13,8 +13,10 @@ public class Staff extends Person{
         }
 
     public double getSalary(){
+
         return salary;
         }
-
-
+    public void setSalary(double s){
+        salary=s;
+    }
         }

@@ -99,7 +99,17 @@ public class Book {
         bookID=loc + Integer.toString(index);
     }
 
+    public void setAuthor(String auth){
+        author=auth;
+    }
 
+    public void setTitle(String tit){
+        title=tit;
+    }
+
+    public void setGenre(String gen){
+        Genre=gen;
+    }
 
 
 }

@@ -4,6 +4,8 @@ public class Borrower extends Person{
         super(n, pnum, pw);
         id=idt;
     }
+
+    // record borrowed books
     @Override
     public void printInfo(){
         super.printInfo();

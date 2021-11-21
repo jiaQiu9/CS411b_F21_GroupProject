@@ -1,7 +1,7 @@
-public class Staff extends Person{
+public class Librarian extends Person{
     protected double salary;
 
-    public Staff(String n, String pw, int pnum, double s  ){
+    public Librarian(String n, String pw, int pnum, double s  ){
         super(n, pnum, pw);
         salary=s;
         }

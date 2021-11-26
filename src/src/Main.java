@@ -312,6 +312,38 @@ public class Main
 
             }
             if (avil.equals(1)){
+                System.out.println("Please enter the new borrow_lst_id,\n" +
+                        "The format of the Borrow list id is the same as other ids, \n" +
+                        "MMDDYYYYHHMM, with month day year Hour and minute format:");
+                String id= "BLST"+input.nextLine();
+
+                System.out.println(" Enter the Borrower id: (if need to check borrower id,\n" +
+                        " ask for first and last name of the borrower and enter 1) otherwise enter 0");
+                int uCBid=input.nextInt();
+                String brid="";
+                if (uCBid==1){
+                    // gets the phone number of the borrower to check for the borrower id in the system
+                    // phone number has more unique characteristics
+                    // since no two people would have the same phone number
+                    System.out.println("Enter the phone number");
+                    String pnum=input.nextLine();
+
+                    String ckBid="SELECT borrower_id FROM borrowers WHERE phone_num=\""+pnum +"\" ";
+                    // send to the database
+                    ResultSet result= stat.executeQuery(ckBid);
+                    ResultSetMetaData rsmds = (ResultSetMetaData) resultSet.getMetaData();
+                    int columnsNumbers = rsmds.getColumnCount();
+                    // print the result
+                    while(result.next()){
+                        for(int i = 1 ; i <= columnsNumbers; i++){
+                            brid=result.getString(i);
+                            System.out.println("For reference: Borrower Id= "+result.getString(i)); //Print one element of a row
+                        }
+
+                    }
+                 //END of the IF
+                }
+
 
             }
 

@@ -414,7 +414,7 @@ public class Main
             ResultSet result= stat.executeQuery(ckBid);
             ResultSetMetaData rsmds = (ResultSetMetaData) result.getMetaData();
             int columnsNumbers = rsmds.getColumnCount();
-            // create variable to store librarian id
+            // create variable to store borrower id
             String brid="";
             // print the result
             while(result.next()){
@@ -430,6 +430,7 @@ public class Main
             title+=input.nextLine();
             System.out.println("");
 
+            // get the borrow list id from books table using title of the returned book
             String bokformat="SELECT borrow_lst_id FROM books WHERE title=\'"+title+"\'";
             ResultSet res= stat.executeQuery(bokformat);
             ResultSetMetaData rsmd = (ResultSetMetaData) res.getMetaData();
@@ -444,8 +445,9 @@ public class Main
                 }
             }
 
-            String areturndate=LocalDate.now().toString();
+            String areturndate=LocalDate.now().toString(); // getting the current date for actual return date
 
+            //update borrow list table
             String returnSt="UPDATE borrow_lst SET returned=1, actual_return=\'"+areturndate+"\' WHERE borrow_id=\'" +
                     brid+"\' AND borrow_lst_id=\'"+brlstid+"\' AND returned=0";
             stat.executeUpdate(returnSt); // sending command to database

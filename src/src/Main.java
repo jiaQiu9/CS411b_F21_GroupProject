@@ -298,8 +298,11 @@ public class Main
             ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             String avil="";
+            boolean inS=false; // if the book is in the system it will be true
             // print the result
+
             while(resultSet.next()){
+                inS=true; // in here means the book is in the system
                 for(int i = 1 ; i <= columnsNumber; i++){
                     avil=resultSet.getString(i);
                     System.out.println("For reference: Availability Id= "+resultSet.getString(i)+", \nif 1 is shown " +
@@ -307,11 +310,13 @@ public class Main
                 }
 
             }
-            if (avil.equals(0) || !(resultSet.next())){
+
+            if (avil.equals("0") || !(inS)){
                 System.out.println("The book: "+titile+" is either not available or not in the system.");
 
             }
-            if (avil.equals(1)){
+            if (avil.equals("1")){
+                // when avil equals to 1, it means the book is in the library database and physically in the library
                 System.out.println("Please enter the new borrow_lst_id,\n" +
                         "The format of the Borrow list id is the same as other ids, \n" +
                         "MMDDYYYYHHMM, with month day year Hour and minute format:");
@@ -320,28 +325,39 @@ public class Main
                 System.out.println(" Enter the Borrower id: (if need to check borrower id,\n" +
                         " ask for first and last name of the borrower and enter 1) otherwise enter 0");
                 int uCBid=input.nextInt();
+
+                // the reponse of ther user
                 String brid="";
                 if (uCBid==1){
                     // gets the phone number of the borrower to check for the borrower id in the system
                     // phone number has more unique characteristics
                     // since no two people would have the same phone number
                     System.out.println("Enter the phone number");
-                    String pnum=input.nextLine();
+                    String pnum=input.next();
 
                     String ckBid="SELECT borrower_id FROM borrowers WHERE phone_num=\""+pnum +"\" ";
                     // send to the database
                     ResultSet result= stat.executeQuery(ckBid);
-                    ResultSetMetaData rsmds = (ResultSetMetaData) resultSet.getMetaData();
+                    ResultSetMetaData rsmds = (ResultSetMetaData) result.getMetaData();
                     int columnsNumbers = rsmds.getColumnCount();
                     // print the result
                     while(result.next()){
                         for(int i = 1 ; i <= columnsNumbers; i++){
-                            brid=result.getString(i);
+                            brid=result.getString(i); // Stores the borrower id
                             System.out.println("For reference: Borrower Id= "+result.getString(i)); //Print one element of a row
                         }
 
                     }
                  //END of the IF
+                }
+                else if (uCBid==0){
+                    System.out.println("Enter the Borrower_id");
+                    brid=input.nextLine();
+                    String ckBid="SELECT * FROM borrowers WHERE borrower_id=\""+brid +"\" ";
+                    ResultSet result= stat.executeQuery(ckBid);
+                    if( !(result.next())){
+                        System.out.println("Invalid Borrower id.");
+                    }
                 }
 
 

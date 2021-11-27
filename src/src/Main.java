@@ -3,7 +3,7 @@ import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-
+import java.time.*;
 public class Main
 {
     public static void printF(){
@@ -348,9 +348,11 @@ public class Main
                         }
 
                     }
+
                  //END of the IF
                 }
                 else if (uCBid==0){
+                    // when the user knows the borrower id
                     System.out.println("Enter the Borrower_id");
                     brid=input.nextLine();
                     String ckBid="SELECT * FROM borrowers WHERE borrower_id=\""+brid +"\" ";
@@ -358,12 +360,47 @@ public class Main
                     if( !(result.next())){
                         System.out.println("Invalid Borrower id.");
                     }
+                    //end of else if
                 }
+                // setting the borrow date and expected return dates
+                String brdate= LocalDate.now().toString();
+                System.out.println("Borrow Date: "+brdate);
+                String erdate=LocalDate.now().plusMonths(1).toString();
+                System.out.println("Expected return date"+erdate);
 
+                int retuned=0; // if returned the value would be 1, otherwise 0
+                String areturndate="null";
 
+                System.out.println("\nEnter Librarian phone number");
+                String lbph_num=input.next();
+                String ckBid="SELECT librarian_id FROM librarian WHERE phone_num=\""+lbph_num +"\" ";
+                // send to the database
+                ResultSet result= stat.executeQuery(ckBid);
+                ResultSetMetaData rsmds = (ResultSetMetaData) result.getMetaData();
+                int columnsNumbers = rsmds.getColumnCount();
+                // create variable to store librarian id
+                String lbid="";
+                // print the result
+                while(result.next()){
+                    for(int i = 1 ; i <= columnsNumbers; i++){
+                        lbid=result.getString(i); // Stores the borrower id
+                        System.out.println("For reference: Librian Id= "+result.getString(i)); //Print one element of a row
+                    }
+
+                }
+                String regformat="INSERT INTO borrow_lst VALUES (\'"+id+"\',\'"+brid+
+                        "\',\'"+brdate+"\',\'"+erdate+"\',\'"+retuned+"\',"+areturndate+",\'"
+                        +lbid+"\')";
+                //System.out.println(regformat);
+                String bokformat="UPDATE books SET avail=0, borrow_lst_id=\'"+id+"\' WHERE title=\'"+titile+"\'";
+                //System.out.println(bokformat);
+
+                // Update the database
+                stat.executeUpdate(regformat);
+                stat.executeUpdate(bokformat);
+                System.out.println("Borrow registered under borrow list id of "+id+" for the book "+titile);
             }
-
-
+            //END OF OPTION 6
         }
         else if (choice==7){
 

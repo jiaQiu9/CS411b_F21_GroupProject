@@ -403,7 +403,60 @@ public class Main
             //END OF OPTION 6
         }
         else if (choice==7){
+            // Register return
 
+            // get borrower id through asking their phone number
+            // since no two people would have identical phone numbers
+            System.out.println("Enter the phone number of the borrower");
+            String brph_num=input.next();
+            String ckBid="SELECT borrower_id FROM borrowers WHERE phone_num=\""+brph_num +"\" ";
+            // send to the database
+            ResultSet result= stat.executeQuery(ckBid);
+            ResultSetMetaData rsmds = (ResultSetMetaData) result.getMetaData();
+            int columnsNumbers = rsmds.getColumnCount();
+            // create variable to store librarian id
+            String brid="";
+            // print the result
+            while(result.next()){
+                for(int i = 1 ; i <= columnsNumbers; i++){
+                    brid=result.getString(i); // Stores the borrower id
+                    System.out.println("For reference: Borrower Id= "+result.getString(i)); //Print one element of a row
+                }
+            }
+
+            // get the title of the returned book
+            System.out.println("Enter the title of the book");
+            String title= input.nextLine();
+            title+=input.nextLine();
+            System.out.println("");
+
+            String bokformat="SELECT borrow_lst_id FROM books WHERE title=\'"+title+"\'";
+            ResultSet res= stat.executeQuery(bokformat);
+            ResultSetMetaData rsmd = (ResultSetMetaData) res.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            // create variable to store borrow lst id
+            String brlstid="";
+            // print the result
+            while(res.next()){
+                for(int i = 1 ; i <= columnsNumber; i++){
+                    brlstid=res.getString(i); // Stores the borrow lst id
+                    System.out.println("For reference: Borrow lst Id= "+res.getString(i)); //Print one element of a row
+                }
+            }
+
+            String areturndate=LocalDate.now().toString();
+
+            String returnSt="UPDATE borrow_lst SET returned=1, actual_return=\'"+areturndate+"\' WHERE borrow_id=\'" +
+                    brid+"\' AND borrow_lst_id=\'"+brlstid+"\' AND returned=0";
+            stat.executeUpdate(returnSt); // sending command to database
+
+            //update the information in the book table
+            String bookUpd="UPDATE books SET avail=1, borrow_lst_id=null WHERE title=\'"+title+"\' AND " +
+                    "borrow_lst_id=\'"+brlstid+"\'";
+            stat.executeUpdate(bookUpd);
+            System.out.println("Book Is returned ");
+
+            //END OF OPTION 7
         }
     }
 
@@ -445,7 +498,7 @@ public class Main
 
 
             }*/
-            functions(statement,6);
+            functions(statement,7);
 
 
 

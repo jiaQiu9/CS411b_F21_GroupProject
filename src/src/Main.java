@@ -20,31 +20,46 @@ public class Main
     public static void functions(Statement stat,int choice) throws SQLException {
         Scanner input=new Scanner(System.in);
         if(choice==1){
+            // Adding or registering a new book fucntionality
             System.out.println("You have selected to add a new book.");
+
+            // need a new book id for the sql table
             System.out.println("Enter the book id in the following format\n" +
                     "FYYIIII, where F represents the floor, YY is the last two digits " +
                     "of the current year, and IIII is the index of the book");
             String book_id= input.nextLine();
+
+            // entering the title of the book
             System.out.println("Enter the title of the book:");
             String title=input.nextLine();
 
+            // Enter the primary author's last name
             System.out.println("Enter the Primary Author last name:");
             String lastname=input.nextLine();
 
+            // Enter the primary author's first name
             System.out.println("Enter the Primary Author first name:");
             String firstname=input.nextLine();
 
+            // enter the full names of other authors, because some books have more than one author
+            // and storing them into a single string makes more sense as the number of other authors is
+            // not easy to generalise
             System.out.println("Enter the names of other authors, in single entry");
             String otherAuthors=input.nextLine();
 
+            // enter the genre of the book
             System.out.println("Enter the genre of the book");
             String genre=input.nextLine();
+
+            // formating the information into sql command
             String formating="INSERT INTO books VALUES("+book_id+","+"\'"+title+"\'"+","+"\'"+lastname+"\'"+","+"\'"+firstname+"\'"+","+"\'"+otherAuthors+"\'"+","+"\'"+genre+"\'"+",1,NULL)";
-            //System.out.println(formating);
+
+            // sending the command to the database
             stat.executeUpdate(formating);
 
         }
         else if (choice==2){
+
             System.out.println("You can search book information based on Title of the book, Primary author last name, and Primary Author first name");
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
             int userchoice= input.nextInt();

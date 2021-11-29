@@ -59,8 +59,10 @@ public class Main
 
         }
         else if (choice==2){
-
+            // search for book information
             System.out.println("You can search book information based on Title of the book, Primary author last name, and Primary Author first name");
+
+            // making the user choose how they will search for book information
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
             int userchoice= input.nextInt();
 

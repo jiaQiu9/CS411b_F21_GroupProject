@@ -7,7 +7,7 @@ import java.time.*;
 public class Main
 {
     public static void printF(){
-        String functions="1. Add book\n " +
+        String functions="1. Add book\n" +
                 "2. Search book information\n" +
                 "3. Update book information\n" +
                 "4. Add borrower\n" +
@@ -17,9 +17,9 @@ public class Main
                 "8. To end the service";
         System.out.println(functions);
     }
-    public static void functions(Statement stat,int choice) throws SQLException {
+    public static void functions(Statement stat,String choice) throws SQLException {
         Scanner input=new Scanner(System.in);
-        if(choice==1){
+        if(choice.equals("1")){
             // Adding or registering a new book fucntionality
             System.out.println("You have selected to add a new book.");
 
@@ -58,20 +58,21 @@ public class Main
             stat.executeUpdate(formating);
 
         }
-        else if (choice==2){
+        else if (choice.equals("2")){
             // search for book information
             System.out.println("You can search book information based on Title of the book, Primary author last name, and Primary Author first name");
 
             // making the user choose how they will search for book information
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
-            int userchoice= input.nextInt();
+            System.out.println("Here option 2");
+            String uchoice= input.next();
 
-            if (userchoice==1){
+            if (uchoice.equals("1")){
                 System.out.println("You have selected to search by title of the book");
                 System.out.println("Enter the title of the book");
                 String titlec=input.nextLine();
                 titlec+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE title="+"\'"+titlec+"\'";
                 //System.out.println(format);
@@ -93,12 +94,12 @@ public class Main
                     System.out.println();//Move to the next line to print the next row.
                 }
             }
-            else if (userchoice==2){
+            else if (uchoice.equals("2")){
                 System.out.println("You have selected to search by last name of the author");
                 System.out.println("Enter the last name of the author");
                 String name=input.nextLine();
                 name+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE author_lastn="+"\'"+name+"\'";
                 //System.out.println(format);
@@ -120,12 +121,12 @@ public class Main
                     System.out.println();//Move to the next line to print the next row.
                 }
             }
-            else if (userchoice==3){
+            else if (uchoice.equals("3")){
                 System.out.println("You have selected to search by first name of the author");
                 System.out.println("Enter the fist name of the author");
                 String name=input.next();
                 name+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE author_first="+"\'"+name+"\'";
                 //System.out.println(format);
@@ -150,8 +151,10 @@ public class Main
             else{
                 System.out.println("The choice you have entered is not listed.");
             }
+
         }
-        else if (choice==3){
+        else if (choice.equals("3")){
+            // update books
             System.out.println("What book information would you like to update?");
             System.out.println("Select enter the full name of the book that you want to update ");
             String title="";
@@ -167,7 +170,7 @@ public class Main
                 System.out.println("Enter the new title");
                 String newTitle=input.nextLine();
                 newTitle+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="UPDATE books SET title="+"\'"+newTitle+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
@@ -180,7 +183,7 @@ public class Main
 
                 System.out.println("Enter the new first name of the author");
                 String newlftn=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="UPDATE books SET author_lastn="+"\'"+newlstn+"\', author_first=\'"+newlftn+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
@@ -189,7 +192,7 @@ public class Main
                 System.out.println("Enter the new other names in a single string");
                 String newon=input.nextLine();
                 newon+=input.nextLine();
-                input.close();
+                //input.close();
                 String format="UPDATE books SET other_auth="+"\'"+newon+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
                 System.out.println("The other authors' names has been changed to  \""+newon+"\" in the book "+title);
@@ -198,7 +201,8 @@ public class Main
             }
 
         }
-        else if (choice==4){
+        else if (choice.equals("4")){
+            //add new borrower
             System.out.println("You are now adding a new borrower");
 
             String format="SELECT borrower_id FROM borrowers ORDER BY borrower_id DESC LIMIT 1";
@@ -243,7 +247,7 @@ public class Main
             System.out.println("New borrower added. Name: "+firstn+" "+lastn+" phone number: "+pnum+" Borrower_id: "+id);
         }
 
-        else if (choice==5){
+        else if (choice.equals("5")){
             System.out.println("You are now adding a new librian");
             // get the last librarian id in the table to use the format as reference
             String format="SELECT librarian_id FROM librarian ORDER BY librarian_id DESC LIMIT 1";
@@ -297,7 +301,7 @@ public class Main
 
         }
 
-        else if (choice==6){
+        else if (choice.equals("6")){
             // Register Borrow
             // need to fill in the borrow_lst table in the database with
             // borrow list id , borrower id, borrow date, expected return date(usually 1 month), if returned,
@@ -421,7 +425,7 @@ public class Main
             }
             //END OF OPTION 6
         }
-        else if (choice==7){
+        else if (choice.equals("7")){
             // Register return
 
             // get borrower id through asking their phone number
@@ -479,11 +483,12 @@ public class Main
 
             //END OF OPTION 7
         }
+
     }
 
     public static void main(String[] args){
 
-        Scanner input=new Scanner(System.in);
+        //Scanner input=new Scanner(System.in);
         System.out.println("You need to connect to a mysql database, before using the service");
         System.out.println("");
 
@@ -506,20 +511,24 @@ public class Main
             Statement statement =connection.createStatement();
             //LibraryRepository libraryRepository=new LibraryRepository();
             // starting the service of this software/ program
+            //int choice;
+            Scanner input=new Scanner(System.in);
             while(true){
                 // the while loop that allows the user to continuely apply functions, until they choose to end
                 // the service
                 printF();
                 System.out.print("\nPlease select the service that you want to conduct:\n");
-                int choice=input.nextInt();
+                //Scanner input=new Scanner(System.in);
+                String choice=input.next();
+
                 System.out.println("\n");
-                if(choice==8){
+                if(choice.equals("8")){
                     System.out.println("Now the service will be shutting off");
                     break;
                 }
-                else if (choice==1 || choice ==2|| choice==3|| choice==4 || choice ==5|| choice==6 || choice ==7){
-                    System.out.println("For the library system that interact with the database.");
-                    LibraryRepository.functions(statement,choice); // calling the functions and applying the user's choice
+                else if (choice.equals("7") || choice.equals("1")|| choice.equals("2")|| choice.equals("3") || choice.equals("4")|| choice.equals("5") || choice.equals("6") ){
+                    //System.out.println("For the library system that interact with the database.");
+                    functions(statement,choice); // calling the functions and applying the user's choice
                 }
                 System.out.println("Please make another choice\n\n");
             }

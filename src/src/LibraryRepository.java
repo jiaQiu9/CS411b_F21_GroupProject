@@ -20,19 +20,44 @@ public class LibraryRepository {
                     "FYYIIII, where F represents the floor, YY is the last two digits " +
                     "of the current year, and IIII is the index of the book");
             String book_id= input.nextLine();
-            while(book_id.length() != 7){
-                System.out.println("The book Id must be 7 digits, please reenter ");
-                book_id= input.nextLine();
-            }
             String ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
             ResultSet resultSet=stat.executeQuery(ckId);
-            while(resultSet.next()){
+
+            // This loop will first check if the book_id is in the system or not
+            // if in the system it will
+            while(true){
+                System.out.println("Enter the book id in the following format\n" +
+                        "FYYIIII, where F represents the floor, YY is the last two digits " +
+                        "of the current year, and IIII is the index of the book");
+                book_id=input.nextLine();
+                ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
+                resultSet=stat.executeQuery(ckId);
+
+                if(resultSet.next()){
+                    continue;
+                }
+                else if (!(resultSet.next())){
+                    if (book_id.length()==7){
+                        break;
+                    }
+                    else{
+                        continue;
+                    }
+
+                }
+            }
+
+            /**while(!(resultSet.next())){
                 System.out.println("The books id is already in the system, please enter another one.");
                 book_id= input.nextLine();
                 ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
                 resultSet=stat.executeQuery(ckId);
+                while(book_id.length() != 7){
+                    System.out.println("The book Id must be 7 digits, please reenter ");
+                    book_id= input.nextLine();
+                }
 
-            }
+            }**/
 
 
             // entering the title of the book
@@ -486,5 +511,6 @@ public class LibraryRepository {
             //END OF OPTION 7
         }
     }
+
 
 }

@@ -510,7 +510,7 @@ public class Main
                 // the while loop that allows the user to continuely apply functions, until they choose to end
                 // the service
                 printF();
-                System.out.print("\nPlease select the service that you want to conduct.:");
+                System.out.print("\nPlease select the service that you want to conduct:\n");
                 int choice=input.nextInt();
                 System.out.println("\n");
                 if(choice==8){

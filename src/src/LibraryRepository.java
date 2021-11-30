@@ -13,11 +13,27 @@ public class LibraryRepository {
             // Adding or registering a new book fucntionality
             System.out.println("You have selected to add a new book.");
 
+
+
             // need a new book id for the sql table
             System.out.println("Enter the book id in the following format\n" +
                     "FYYIIII, where F represents the floor, YY is the last two digits " +
                     "of the current year, and IIII is the index of the book");
             String book_id= input.nextLine();
+            while(book_id.length() != 7){
+                System.out.println("The book Id must be 7 digits, please reenter ");
+                book_id= input.nextLine();
+            }
+            String ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
+            ResultSet resultSet=stat.executeQuery(ckId);
+            while(resultSet.next()){
+                System.out.println("The books id is already in the system, please enter another one.");
+                book_id= input.nextLine();
+                ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
+                resultSet=stat.executeQuery(ckId);
+
+            }
+
 
             // entering the title of the book
             System.out.println("Enter the title of the book:");

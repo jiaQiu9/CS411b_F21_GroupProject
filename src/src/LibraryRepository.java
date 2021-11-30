@@ -102,7 +102,7 @@ public class LibraryRepository {
                 System.out.println("Enter the title of the book");
                 String titlec=input.nextLine();
                 titlec+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE title="+"\'"+titlec+"\'";
                 //System.out.println(format);
@@ -129,7 +129,7 @@ public class LibraryRepository {
                 System.out.println("Enter the last name of the author");
                 String name=input.nextLine();
                 name+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE author_lastn="+"\'"+name+"\'";
                 //System.out.println(format);
@@ -156,7 +156,7 @@ public class LibraryRepository {
                 System.out.println("Enter the fist name of the author");
                 String name=input.next();
                 name+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="SELECT * FROM books WHERE author_first="+"\'"+name+"\'";
                 //System.out.println(format);
@@ -198,7 +198,7 @@ public class LibraryRepository {
                 System.out.println("Enter the new title");
                 String newTitle=input.nextLine();
                 newTitle+=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="UPDATE books SET title="+"\'"+newTitle+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
@@ -211,7 +211,7 @@ public class LibraryRepository {
 
                 System.out.println("Enter the new first name of the author");
                 String newlftn=input.nextLine();
-                input.close();
+                //input.close();
 
                 String format="UPDATE books SET author_lastn="+"\'"+newlstn+"\', author_first=\'"+newlftn+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
@@ -220,7 +220,7 @@ public class LibraryRepository {
                 System.out.println("Enter the new other names in a single string");
                 String newon=input.nextLine();
                 newon+=input.nextLine();
-                input.close();
+                //input.close();
                 String format="UPDATE books SET other_auth="+"\'"+newon+"\' WHERE title="+"\'"+title+"\'";
                 stat.executeUpdate(format);
                 System.out.println("The other authors' names has been changed to  \""+newon+"\" in the book "+title);

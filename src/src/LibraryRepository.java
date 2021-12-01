@@ -16,16 +16,20 @@ public class LibraryRepository {
 
 
             // need a new book id for the sql table
-            System.out.println("Enter the book id in the following format\n" +
+            /*System.out.println("Enter the book id in the following format\n" +
                     "FYYIIII, where F represents the floor, YY is the last two digits " +
                     "of the current year, and IIII is the index of the book");
             String book_id= input.nextLine();
             String ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
-            ResultSet resultSet=stat.executeQuery(ckId);
+            ResultSet resultSet=stat.executeQuery(ckId);*/
 
+            String book_id;
+            String ckId;
+            ResultSet resultSet;
             // This loop will first check if the book_id is in the system or not
             // if in the system it will
             while(true){
+                // need a new book id for the sql table
                 System.out.println("Enter the book id in the following format\n" +
                         "FYYIIII, where F represents the floor, YY is the last two digits " +
                         "of the current year, and IIII is the index of the book");
@@ -34,13 +38,18 @@ public class LibraryRepository {
                 resultSet=stat.executeQuery(ckId);
 
                 if(resultSet.next()){
+                    // the book_id is in the system
+                    System.out.println("The book_id is in the system, please enter another one");
                     continue;
                 }
                 else if (!(resultSet.next())){
                     if (book_id.length()==7){
+                        // the book_id is of length 7 and not in the system
                         break;
                     }
                     else{
+                        // teh book_id if not of length 7 but it is not in the system
+                        System.out.println("The book_id entered is not of right length.");
                         continue;
                     }
 
@@ -96,33 +105,35 @@ public class LibraryRepository {
             // making the user choose how they will search for book information
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
             int userchoice= input.nextInt();
-
+            String format;
             if (userchoice==1){
-                System.out.println("You have selected to search by title of the book");
-                System.out.println("Enter the title of the book");
-                String titlec=input.nextLine();
-                titlec+=input.nextLine();
-                //input.close();
+                String titlec;
 
-                String format="SELECT * FROM books WHERE title="+"\'"+titlec+"\'";
-                //System.out.println(format);
-                ResultSet result=stat.executeQuery(format);
-                //System.out.println(result.toString());
-                ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
+                    System.out.println("You have selected to search by title of the book");
+                    System.out.println("Enter the title of the book");
+                    titlec=input.nextLine();
+                    titlec+=input.nextLine();
+                    format="SELECT * FROM books WHERE title="+"\'"+titlec+"\'";
+                    ResultSet result=stat.executeQuery(format);
+                    if (result.next()){
+                        ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
+                        int columnsNumber = rsmd.getColumnCount();
+                        while(result.next()){
+                            for(int i = 1 ; i <= columnsNumber; i++){
 
-                int columnsNumber = rsmd.getColumnCount();
+                                System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
 
-                //System.out.println(result);
-                //System.out.println(result.getString(2));
-                while(result.next()){
-                    for(int i = 1 ; i <= columnsNumber; i++){
+                            }
 
-                        System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
+                            System.out.println();//Move to the next line to print the next row.
+                        }
+
+                    }
+                    else{
+                        System.out.println("The book is not in the system.\n");
 
                     }
 
-                    System.out.println();//Move to the next line to print the next row.
-                }
             }
             else if (userchoice==2){
                 System.out.println("You have selected to search by last name of the author");
@@ -131,25 +142,33 @@ public class LibraryRepository {
                 name+=input.nextLine();
                 //input.close();
 
-                String format="SELECT * FROM books WHERE author_lastn="+"\'"+name+"\'";
+                format="SELECT * FROM books WHERE author_lastn="+"\'"+name+"\'";
                 //System.out.println(format);
                 ResultSet result=stat.executeQuery(format);
                 //System.out.println(result.toString());
-                ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
-                int columnsNumber = rsmd.getColumnCount();
+                if (result.next()){
+                    ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
-                //System.out.println(result);
-                //System.out.println(result.getString(2));
-                while(result.next()){
-                    for(int i = 1 ; i <= columnsNumber; i++){
+                    int columnsNumber = rsmd.getColumnCount();
 
-                        System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
+                    //System.out.println(result);
+                    //System.out.println(result.getString(2));
+                    while(result.next()){
+                        for(int i = 1 ; i <= columnsNumber; i++){
 
+                            System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
+
+                        }
+
+                        System.out.println();//Move to the next line to print the next row.
                     }
-
-                    System.out.println();//Move to the next line to print the next row.
                 }
+                else{
+                    System.out.println("The author is not in the system.");
+                }
+
+
             }
             else if (userchoice==3){
                 System.out.println("You have selected to search by first name of the author");
@@ -158,80 +177,108 @@ public class LibraryRepository {
                 name+=input.nextLine();
                 //input.close();
 
-                String format="SELECT * FROM books WHERE author_first="+"\'"+name+"\'";
+                format="SELECT * FROM books WHERE author_first="+"\'"+name+"\'";
                 //System.out.println(format);
                 ResultSet result=stat.executeQuery(format);
                 //System.out.println(result.toString());
-                ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
-                int columnsNumber = rsmd.getColumnCount();
+                if(result.next()){
+                    ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
-                //System.out.println(result);
-                //System.out.println(result.getString(2));
-                while(result.next()){
-                    for(int i = 1 ; i <= columnsNumber; i++){
+                    int columnsNumber = rsmd.getColumnCount();
 
-                        System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
+                    //System.out.println(result);
+                    //System.out.println(result.getString(2));
+                    while(result.next()){
+                        for(int i = 1 ; i <= columnsNumber; i++){
 
+                            System.out.print("|"+result.getString(i) + " |, "); //Print one element of a row
+
+                        }
+
+                        System.out.println();//Move to the next line to print the next row.
                     }
-
-                    System.out.println();//Move to the next line to print the next row.
+                }
+                else{
+                    System.out.print("The author not in the system.");
                 }
             }
             else{
                 System.out.println("The choice you have entered is not listed.");
             }
+
+        // END of 2
         }
         else if (choice==3){
+            // OPTION 3
+            // add borrower
+
             System.out.println("What book information would you like to update?");
-            System.out.println("Select enter the full name of the book that you want to update ");
+            System.out.println("Enter the full name of the book that you want to update ");
             String title="";
-            title=input.nextLine();
-            //title+=input.nextLine();
-            //input.close();
+            title=input.nextLine(); // asking the user for input
 
+            // display the title entered
             System.out.println("You have selected to update "+title);
-            System.out.println("Select the following information to be updated: 1. Title, 2 primary author  name, 3 others' names ");
-            int userchoice= input.nextInt();
 
-            if (userchoice==1){
-                System.out.println("Enter the new title");
-                String newTitle=input.nextLine();
-                newTitle+=input.nextLine();
-                //input.close();
+            // checks if the books is in the database or not, by sending a query to the sql
+            String checkTi="SELECT * FROM books WHERE title=\'"+title+"\'";
+            ResultSet resultSet= stat.executeQuery(checkTi);
+            // if the resultset.next is true, then the book with that tile is in the system
+            // if false, then the book is not.
+            if(resultSet.next()){
+                System.out.println("Select the following information to be updated: 1. Title, 2 primary author  name, 3 others' names ");
+                // asking the user what they want to update
+                int userchoice= input.nextInt();
+                // checking the user input with if statements
+                if (userchoice==1){
+                    // for updating book title
+                    System.out.println("Enter the new title");
+                    String newTitle=input.nextLine();
+                    newTitle+=input.nextLine();
+                    String format="UPDATE books SET title="+"\'"+newTitle+"\' WHERE title="+"\'"+title+"\'";
+                    stat.executeUpdate(format);
+                    System.out.println("The old title \""+title+"\" has been changed to the new title \""+newTitle+"\"");
 
-                String format="UPDATE books SET title="+"\'"+newTitle+"\' WHERE title="+"\'"+title+"\'";
-                stat.executeUpdate(format);
-                System.out.println("The old title \""+title+"\" has been changed to the new title \""+newTitle+"\"");
-            }else if(userchoice==2){
-                System.out.println("Enter the new last name of the author");
-                String newlstn=input.nextLine();
-                newlstn+=input.nextLine();
+                }else if(userchoice==2){
+                    // for updating primary author name, includes both last and first name of the author
+                    System.out.println("Enter the new last name of the author");
+                    String newlstn=input.nextLine();
+                    newlstn+=input.nextLine();
+                    System.out.println("Enter the new first name of the author");
+                    String newlftn=input.nextLine();
+                    String format="UPDATE books SET author_lastn="+"\'"+newlstn+"\', author_first=\'"+newlftn+"\' WHERE title="+"\'"+title+"\'";
+                    stat.executeUpdate(format);
+                    System.out.println("The Primary author's name has been changed to  \""+newlftn+" "+newlstn+"\"");
 
+                }else if(userchoice==3){
+                    // updates the names of the other authors
+                    System.out.println("Enter the new other names in a single string");
+                    String newon=input.nextLine();
+                    newon+=input.nextLine();
 
-                System.out.println("Enter the new first name of the author");
-                String newlftn=input.nextLine();
-                //input.close();
-
-                String format="UPDATE books SET author_lastn="+"\'"+newlstn+"\', author_first=\'"+newlftn+"\' WHERE title="+"\'"+title+"\'";
-                stat.executeUpdate(format);
-                System.out.println("The Primary author's name has been changed to  \""+newlftn+" "+newlstn+"\"");
-            }else if(userchoice==3){
-                System.out.println("Enter the new other names in a single string");
-                String newon=input.nextLine();
-                newon+=input.nextLine();
-                //input.close();
-                String format="UPDATE books SET other_auth="+"\'"+newon+"\' WHERE title="+"\'"+title+"\'";
-                stat.executeUpdate(format);
-                System.out.println("The other authors' names has been changed to  \""+newon+"\" in the book "+title);
-            }else{
-                System.out.println("The entered choice is not in the option");
+                    String format="UPDATE books SET other_auth="+"\'"+newon+"\' WHERE title="+"\'"+title+"\'";
+                    stat.executeUpdate(format);
+                    System.out.println("The other authors' names has been changed to  \""+newon+"\" in the book "+title);
+                }else{
+                    // if the user entered something other than instructed
+                    System.out.println("The entered choice is not in the option");
+                }
             }
+            else{
+                // if the book is not in  the system
+                System.out.println("The book with the title= "+title+" is not in the system.");
+            }
+
+
 
         }
         else if (choice==4){
+            // OPTION 4
+            // Add borrower
             System.out.println("You are now adding a new borrower");
 
+            // printing the last borrower id for reference
             String format="SELECT borrower_id FROM borrowers ORDER BY borrower_id DESC LIMIT 1";
             ResultSet resultSet= stat.executeQuery(format);
             ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
@@ -240,21 +287,29 @@ public class LibraryRepository {
 
             while(resultSet.next()){
                 for(int i = 1 ; i <= columnsNumber; i++){
-
                     System.out.print("For reference: Last Borrower Id= "+resultSet.getString(i) ); //Print one element of a row
+                }
+                System.out.println();//Move to the next line to print the next row.
+            }
 
+            // asking the user to enter the borrower id
+            String id;
+
+            while(true){
+                System.out.println("");
+                System.out.println("Enter the Borrower id in the format of MMDDYYYYHHMM, \nwhere the first M is the current month" +
+                        "the D is the current day, Y is the current year, \nH is the current hour in 24 hour format, the Last M is" +
+                        "the current minutes:");
+                id="B"+input.nextLine();
+                if (id.length()==13){
+                    format="SELECT * FROM borrowers WHERE borrower_id=\'"+id+"\'";
+                }else{
+                    break;
                 }
 
-                System.out.println();//Move to the next line to print the next row.
 
 
             }
-
-            System.out.println("");
-            System.out.println("Enter the Borrower id in the format of MMDDYYYYHHMM, \nwhere the first M is the current month" +
-                    "the D is the current day, Y is the current year, \nH is the current hour in 24 hour format, the Last M is" +
-                    "the current minutes:");
-            String id="B"+input.nextLine();
 
             System.out.println("Enter the first name of the new Borrower.");
             String firstn= input.nextLine();
@@ -275,6 +330,7 @@ public class LibraryRepository {
         }
 
         else if (choice==5){
+            //OPTION 5 Add librarian
             System.out.println("You are now adding a new librian");
             // get the last librarian id in the table to use the format as reference
             String format="SELECT librarian_id FROM librarian ORDER BY librarian_id DESC LIMIT 1";

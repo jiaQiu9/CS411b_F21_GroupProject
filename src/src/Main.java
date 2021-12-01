@@ -17,9 +17,10 @@ public class Main
                 "8. To end the service";
         System.out.println(functions);
     }
-    public static void functions(Statement stat,String choice) throws SQLException {
+    public static void functions(Statement stat,int choice) throws SQLException {
         Scanner input=new Scanner(System.in);
-        if(choice.equals("1")){
+        if(choice==1){
+            //option 1
             // Adding or registering a new book fucntionality
             System.out.println("You have selected to add a new book.");
 
@@ -58,7 +59,8 @@ public class Main
             stat.executeUpdate(formating);
 
         }
-        else if (choice.equals("2")){
+        else if (choice==2){
+            //option 2
             // search for book information
             System.out.println("You can search book information based on Title of the book, Primary author last name, and Primary Author first name");
 
@@ -153,7 +155,9 @@ public class Main
             }
 
         }
-        else if (choice.equals("3")){
+        else if (choice==3){
+            //Option 3, updating book information
+
             // update books
             System.out.println("What book information would you like to update?");
             System.out.println("Select enter the full name of the book that you want to update ");
@@ -201,7 +205,7 @@ public class Main
             }
 
         }
-        else if (choice.equals("4")){
+        else if (choice==4){
             //add new borrower
             System.out.println("You are now adding a new borrower");
 
@@ -247,7 +251,7 @@ public class Main
             System.out.println("New borrower added. Name: "+firstn+" "+lastn+" phone number: "+pnum+" Borrower_id: "+id);
         }
 
-        else if (choice.equals("5")){
+        else if (choice==5){
             System.out.println("You are now adding a new librian");
             // get the last librarian id in the table to use the format as reference
             String format="SELECT librarian_id FROM librarian ORDER BY librarian_id DESC LIMIT 1";
@@ -301,7 +305,7 @@ public class Main
 
         }
 
-        else if (choice.equals("6")){
+        else if (choice==6){
             // Register Borrow
             // need to fill in the borrow_lst table in the database with
             // borrow list id , borrower id, borrow date, expected return date(usually 1 month), if returned,
@@ -425,7 +429,7 @@ public class Main
             }
             //END OF OPTION 6
         }
-        else if (choice.equals("7")){
+        else if (choice==7){
             // Register return
 
             // get borrower id through asking their phone number
@@ -519,16 +523,16 @@ public class Main
                 printF();
                 System.out.print("\nPlease select the service that you want to conduct:\n");
                 //Scanner input=new Scanner(System.in);
-                String choice=input.next();
+                int choice=input.nextInt();
 
                 System.out.println("\n");
-                if(choice.equals("8")){
+                if(choice==8){
                     System.out.println("Now the service will be shutting off");
                     break;
                 }
-                else if (choice.equals("7") || choice.equals("1")|| choice.equals("2")|| choice.equals("3") || choice.equals("4")|| choice.equals("5") || choice.equals("6") ){
+                else if (choice==1 || choice==2|| choice==3|| choice==4 || choice==5|| choice==6 || choice==7 ){
                     //System.out.println("For the library system that interact with the database.");
-                    functions(statement,choice); // calling the functions and applying the user's choice
+                    LibraryRepository.functions(statement,choice); // calling the functions and applying the user's choice
                 }
                 System.out.println("Please make another choice\n\n");
             }

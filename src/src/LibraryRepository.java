@@ -330,7 +330,8 @@ public class LibraryRepository {
             String inputFormat = "INSERT INTO borrowers VALUES(\'" + id + "\',\'" + lastn + "\',\'" + firstn + "\',\'" + pnum + "\' )";
             stat.executeUpdate(inputFormat);
             System.out.println("New borrower added. Name: " + firstn + " " + lastn + " phone number: " + pnum + " Borrower_id: " + id);
-        } else if (choice == 5) {
+        }
+        else if (choice == 5) {
             //OPTION 5 Add librarian
             System.out.println("You are now adding a new librian");
             // get the last librarian id in the table to use the format as reference
@@ -350,10 +351,31 @@ public class LibraryRepository {
             }
 
             System.out.println("");
-            System.out.println("Enter the librarian id in the format of MMDDYYYYHHMM, \nwhere the first M is the current month" +
-                    "the D is the current day, Y is the current year, \nH is the current hour in 24 hour format, the Last M is" +
-                    "the current minutes:");
-            String id = "L" + input.nextLine();
+
+            String id;
+
+            while (true) {
+                System.out.println("");
+                System.out.println("Enter the Librarian id in the format of MMDDYYYYHHMM, \nwhere the first M is the current month" +
+                        "the D is the current day, Y is the current year, \nH is the current hour in 24 hour format, the Last M is" +
+                        "the current minutes:");
+                id = "L" + input.nextLine();
+                if (id.length() == 13) {
+                    format = "SELECT * FROM librarian WHERE librarian_id=\'" + id + "\'";
+                    ResultSet resultSet1 = stat.executeQuery(format);
+                    if (resultSet1.next()) {
+                        System.out.println("The librarian id, " + id + ", is already in the system, please enter another one");
+                        continue;
+                    } else {
+                        // if the borrower id entered by the user had the right format and is not in the system.
+                        break;
+                    }
+                } else {
+                    System.out.println("The librarian id entered is not in the right format.");
+                    break;
+                }
+            }
+
 
             System.out.println("Enter the first name of the new Librarian.");
             String firstn = input.nextLine();
@@ -362,17 +384,39 @@ public class LibraryRepository {
             String lastn = input.nextLine();
 
             System.out.println("Enter the 10 digit phone number of the Librarian");
-            String pnum = input.nextLine();
-            while (pnum.length() != 10) {
+            String pnum;
+            // making sure that phone number entered is the right length and not already in the system
+            while (true) {
                 System.out.println("The entered phone number is does not have length of 10 digits");
                 System.out.println("Enter the 10 digit phone number again");
                 pnum = input.nextLine();
+
+                // if the phone number is not in the right format
+                if (pnum.length() == 10) {
+                    // checking if the phone number is in the system or not
+                    format = "SELECT * FROM librarian WHERE phone_num=\'" + pnum + "\'";
+                    ResultSet resultSet1 = stat.executeQuery(format);
+                    if (resultSet1.next()) {
+                        System.out.println("The phone number entered is in the system.\n" +
+                                "Please enter another phone number.");
+                        continue;
+                    } else {
+                        System.out.println("The phone number " + pnum + " entered has been accepted ");
+                        break;
+                    }
+                } else {
+                    System.out.println(" The Phone number entered is not in the right format.");
+                    continue;
+                }
+                // END OF THE PHONE NUMBER ASKING WHILE LOOP
             }
+
+
             System.out.println("Enter the 6 digit password for Librarian");
             String psw = input.nextLine();
             while (psw.length() != 6) {
-                System.out.println("The entered phone number is does not have length of 10 digits");
-                System.out.println("Enter the 10 digit phone number again");
+                System.out.println("The entered password does not have length of 6 digits");
+                System.out.println("Enter the 6 digit password again");
                 psw = input.nextLine();
             }
 
@@ -381,8 +425,9 @@ public class LibraryRepository {
 
             String inputFormat = "INSERT INTO librarian VALUES(\'" + id + "\',\'" + firstn + "\',\'" + lastn + "\',\'" + pnum + "\'," + "\'" + psw + "\'," + salary + ")";
             stat.executeUpdate(inputFormat);
-            System.out.println("New borrower added. Name: " + firstn + " " + lastn + " phone number: " + pnum + " Borrower_id: " + id);
+            System.out.println("New librarian added. Name: " + firstn + " " + lastn + " phone number: " + pnum + " Borrower_id: " + id);
 
+            // END OF OPTION 5
         } else if (choice == 6) {
             // Register Borrow
             // need to fill in the borrow_lst table in the database with

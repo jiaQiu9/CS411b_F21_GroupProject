@@ -1,5 +1,6 @@
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -303,27 +304,59 @@ public class LibraryRepository {
                 id="B"+input.nextLine();
                 if (id.length()==13){
                     format="SELECT * FROM borrowers WHERE borrower_id=\'"+id+"\'";
+                    ResultSet resultSet1=stat.executeQuery(format);
+                    if(resultSet1.next()){
+                        System.out.println("The borrower id, "+id+", is already in the system, please enter another one");
+                        continue;
+                    }
+                    else{
+                        // if the borrower id entered by the user had the right format and is not in the system.
+                        break;
+                    }
                 }else{
+                    System.out.println("The borrower id entered is not in the right format.");
                     break;
                 }
-
-
-
             }
 
+            // asking for the borrower information
             System.out.println("Enter the first name of the new Borrower.");
             String firstn= input.nextLine();
 
             System.out.println("Enter the last name of the new Borrower.");
             String lastn= input.nextLine();
 
-            System.out.println("Enter the 10 digit phone number of the Borrower");
-            String pnum= input.nextLine();
-            while(pnum.length()!= 10){
+            //System.out.println("Enter the 10 digit phone number of the Borrower");
+            String pnum;
+            // making sure that phone number entered is the right length and not already in the system
+            while(true){
                 System.out.println("The entered phone number is does not have length of 10 digits");
                 System.out.println("Enter the 10 digit phone number again");
                 pnum=input.nextLine();
+
+                // if the phone number is not in the right format
+                if (pnum.length()==10){
+                    // checking if the phone number is in the system or not
+                    format="SELECT * FROM borrowers WHERE phone_num=\'"+pnum+"\'";
+                    ResultSet resultSet1=stat.executeQuery(format);
+                    if (resultSet1.next()){
+                        System.out.println("The phone number entered is in the system.\n" +
+                                "Please enter another phone number.");
+                        continue;
+                    }
+                    else{
+                        System.out.println("The phone number "+pnum+" entered has been accepted ");
+                        break;
+                    }
+                }
+                else{
+                    System.out.println(" The Phone number entered is not in the right format.");
+                    continue;
+                }
+
+
             }
+            // sending adding borrower to the borrowers table in the database.
             String inputFormat="INSERT INTO borrowers VALUES(\'"+id+"\',\'"+lastn+"\',\'"+firstn+"\',\'"+pnum+"\' )";
             stat.executeUpdate(inputFormat);
             System.out.println("New borrower added. Name: "+firstn+" "+lastn+" phone number: "+pnum+" Borrower_id: "+id);

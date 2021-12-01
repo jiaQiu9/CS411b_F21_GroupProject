@@ -90,6 +90,7 @@ public class LibraryRepository {
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
             int userchoice = input.nextInt();
             String format;
+            boolean inSys=false;
             if (userchoice == 1) {
                 String titlec;
 
@@ -97,24 +98,28 @@ public class LibraryRepository {
                 System.out.println("Enter the title of the book");
                 titlec = input.nextLine();
                 titlec += input.nextLine();
+
+
                 format = "SELECT * FROM books WHERE title=" + "\'" + titlec + "\'";
+
                 ResultSet result = stat.executeQuery(format);
-                if (result.next()) {
-                    ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
-                    int columnsNumber = rsmd.getColumnCount();
-                    while (result.next()) {
-                        for (int i = 1; i <= columnsNumber; i++) {
 
-                            System.out.print("|" + result.getString(i) + " |, "); //Print one element of a row
 
-                        }
+                ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                    //System.out.println("Here 109");
+                while (result.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
 
-                        System.out.println();//Move to the next line to print the next row.
+                        System.out.print("|" + result.getString(i) + " |, "); //Print one element of a row
+
                     }
 
-                } else {
-                    System.out.println("The book is not in the system.\n");
-
+                    System.out.println();//Move to the next line to print the next row.
+                    inSys=true;
+                }
+                if (inSys==false){
+                    System.out.println("The book is not in the system");
                 }
 
             } else if (userchoice == 2) {
@@ -129,7 +134,7 @@ public class LibraryRepository {
                 ResultSet result = stat.executeQuery(format);
                 //System.out.println(result.toString());
 
-                if (result.next()) {
+
                     ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
                     int columnsNumber = rsmd.getColumnCount();
@@ -144,9 +149,10 @@ public class LibraryRepository {
                         }
 
                         System.out.println();//Move to the next line to print the next row.
+                        inSys=true;
                     }
-                } else {
-                    System.out.println("The author is not in the system.");
+                if (inSys==false){
+                    System.out.println("The author is not in the system");
                 }
 
 
@@ -162,7 +168,7 @@ public class LibraryRepository {
                 ResultSet result = stat.executeQuery(format);
                 //System.out.println(result.toString());
 
-                if (result.next()) {
+
                     ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
                     int columnsNumber = rsmd.getColumnCount();
@@ -177,12 +183,14 @@ public class LibraryRepository {
                         }
 
                         System.out.println();//Move to the next line to print the next row.
+                        inSys=true;
                     }
-                } else {
-                    System.out.print("The author not in the system.");
+                if (inSys==false){
+                    System.out.println("The author is not in the system");
                 }
+
             } else {
-                System.out.println("The choice you have entered is not listed.");
+                System.out.println("The choice you have entered is not listed. Or the book is not in the system.");
             }
 
             // END of 2

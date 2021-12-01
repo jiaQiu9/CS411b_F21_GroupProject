@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class LibraryRepository {
-    public static void functions(Statement stat, int choice) throws SQLException {
+    public static void userActions(Statement stat, int choice) throws SQLException {
         Scanner input = new Scanner(System.in);
         if (choice == 1) {
             // Adding or registering a new book fucntionality

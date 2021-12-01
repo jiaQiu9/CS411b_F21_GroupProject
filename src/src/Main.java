@@ -59,7 +59,7 @@ public class Main
                 }
                 else if (choice==1 || choice==2|| choice==3|| choice==4 || choice==5|| choice==6 || choice==7 ){
                     //System.out.println("For the library system that interact with the database.");
-                    LibraryRepository.functions(statement,choice); // calling the functions and applying the user's choice
+                    LibraryRepository.userActions(statement,choice); // calling the functions and applying the user's choice
                 }
                 System.out.println("Please make another choice\n\n");
             }

@@ -39,6 +39,11 @@ public class Main
         System.out.println("You need to connect to a mysql database, before using the service");
         System.out.println("");
 
+
+        // the following commented out lines of code were meant to ask the user for connection credential to their
+        // database,
+
+
         /*System.out.println("Enter database URL: ");
         String dbURL=input.next();
 

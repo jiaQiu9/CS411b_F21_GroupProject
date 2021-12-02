@@ -5,7 +5,7 @@
  * search for boo information, update book information, add new borrower, add new librarian, register borrow, register
  * return, and stop the service.
  *
- * Requirements: Java 15, mysql 8.0.2
+ * Requirements: Java 15, mysql 8.0.27
  *
  * Other comments: most of the functions are just requests to the mysql repository,
  *                  The user must import the database from the database folder into their mysql database,

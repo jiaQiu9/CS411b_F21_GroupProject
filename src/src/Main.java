@@ -1,3 +1,19 @@
+/**
+ * Authors: CS 411 section b1 Group 2
+ *
+ * Description for the system: This is a Library management system, where the librarian could register new book,
+ * search for boo information, update book information, add new borrower, add new librarian, register borrow, register
+ * return, and stop the service.
+ *
+ * Requirements: Java 15, mysql 8.0.2
+ *
+ * Other comments: most of the functions are just requests to the mysql repository,
+ *                  The user must import the database from the database folder into their mysql database,
+ *                  If needed, the user must change the connection to the database.
+ *
+ * Contact: jiaq9@bu.edu, if any questions is raised.
+ * **/
+
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 import java.io.*;

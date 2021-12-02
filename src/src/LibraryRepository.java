@@ -91,15 +91,17 @@ public class LibraryRepository {
             int userchoice = input.nextInt();
             String format;
             boolean inSys=false;
+            // applying user choice
             if (userchoice == 1) {
+                // search book information based on title
                 String titlec;
-
+                // asking the user for the title of the book
                 System.out.println("You have selected to search by title of the book");
                 System.out.println("Enter the title of the book");
                 titlec = input.nextLine();
                 titlec += input.nextLine();
 
-
+                // formating the information to be a sql query
                 format = "SELECT * FROM books WHERE title=" + "\'" + titlec + "\'";
 
                 ResultSet result = stat.executeQuery(format);
@@ -123,6 +125,7 @@ public class LibraryRepository {
                 }
 
             } else if (userchoice == 2) {
+                // search book information based on primary author's last name
                 System.out.println("You have selected to search by last name of the author");
                 System.out.println("Enter the last name of the author");
                 String name = input.nextLine();
@@ -139,8 +142,6 @@ public class LibraryRepository {
 
                     int columnsNumber = rsmd.getColumnCount();
 
-                    //System.out.println(result);
-                    //System.out.println(result.getString(2));
                     while (result.next()) {
                         for (int i = 1; i <= columnsNumber; i++) {
 
@@ -157,6 +158,7 @@ public class LibraryRepository {
 
 
             } else if (userchoice == 3) {
+                // search book information based on the primary author's first name
                 System.out.println("You have selected to search by first name of the author");
                 System.out.println("Enter the fist name of the author");
                 String name = input.next();
@@ -173,8 +175,6 @@ public class LibraryRepository {
 
                     int columnsNumber = rsmd.getColumnCount();
 
-                    //System.out.println(result);
-                    //System.out.println(result.getString(2));
                     while (result.next()) {
                         for (int i = 1; i <= columnsNumber; i++) {
 

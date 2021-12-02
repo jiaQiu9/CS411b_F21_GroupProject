@@ -11,12 +11,9 @@ public class LibraryRepository {
     public static void userActions(Statement stat, int choice) throws SQLException {
         Scanner input = new Scanner(System.in);
         if (choice == 1) {
+            // OPTIONS 1
             // Adding or registering a new book fucntionality
             System.out.println("You have selected to add a new book.");
-
-
-            // need a new book id for the sql table
-
 
             String book_id;
             String ckId;
@@ -30,8 +27,9 @@ public class LibraryRepository {
                         "of the current year, and IIII is the index of the book");
                 book_id = input.nextLine();
                 ckId = "SELECT * FROM books WHERE book_id=\'" + book_id + "\'";
-                resultSet = stat.executeQuery(ckId);
-
+                resultSet = stat.executeQuery(ckId); // sending command to database
+                // if there is a book with this book id in the system, then the resultSet.next() would be true
+                // else it will be false
                 if (resultSet.next()) {
                     // the book_id is in the system
                     System.out.println("The book_id is in the system, please enter another one");
@@ -78,6 +76,7 @@ public class LibraryRepository {
             stat.executeUpdate(formating);
 
         } else if (choice == 2) {
+            //OPTION 2
             // search for book information
             System.out.println("You can search book information based on Title of the book, Primary author last name, and Primary Author first name");
 
@@ -125,12 +124,12 @@ public class LibraryRepository {
                 System.out.println("Enter the last name of the author");
                 String name = input.nextLine();
                 name += input.nextLine();
-                //input.close();
+
                 // formating the information into sql query to be executed
                 format = "SELECT * FROM books WHERE author_lastn=" + "\'" + name + "\'";
-                //System.out.println(format);
+
                 ResultSet result = stat.executeQuery(format);
-                //System.out.println(result.toString());
+
 
 
                     ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
@@ -145,9 +144,10 @@ public class LibraryRepository {
                         }
 
                         System.out.println();//Move to the next line to print the next row.
-                        inSys=true;
+                        inSys=true; // if in the system, it will modify inSys to true, while it is false when defined
                     }
                 if (inSys==false){
+                    // is not in the system
                     System.out.println("The author is not in the system");
                 }
 
@@ -158,12 +158,9 @@ public class LibraryRepository {
                 System.out.println("Enter the fist name of the author");
                 String name = input.next();
                 name += input.nextLine();
-                //input.close();
-
+                //  formatting sql command for later use
                 format = "SELECT * FROM books WHERE author_first=" + "\'" + name + "\'";
-                //System.out.println(format);
                 ResultSet result = stat.executeQuery(format);
-                //System.out.println(result.toString());
 
 
                     ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
@@ -379,13 +376,13 @@ public class LibraryRepository {
                 }
             }
 
-
+            // asking for the first name of the new librarian
             System.out.println("Enter the first name of the new Librarian.");
             String firstn = input.nextLine();
-
+            // asking for the last name of the new librarian
             System.out.println("Enter the last name of the new Librarian.");
             String lastn = input.nextLine();
-
+            // asking for ten digit phone number of the new librarian
             System.out.println("Enter the 10 digit phone number of the Librarian");
             String pnum;
             // making sure that phone number entered is the right length and not already in the system
@@ -414,7 +411,7 @@ public class LibraryRepository {
                 // END OF THE PHONE NUMBER ASKING WHILE LOOP
             }
 
-
+            // asking for the password for the new librarian to access the system.
             System.out.println("Enter the 6 digit password for Librarian");
             String psw = input.nextLine();
             while (psw.length() != 6) {
@@ -422,10 +419,10 @@ public class LibraryRepository {
                 System.out.println("Enter the 6 digit password again");
                 psw = input.nextLine();
             }
-
+            // asking for the salary of the new librarian
             System.out.println("Enter the salary for Librarian");
             String salary = input.nextLine();
-
+            // formatting the sql query
             String inputFormat = "INSERT INTO librarian VALUES(\'" + id + "\',\'" + firstn + "\',\'" + lastn + "\',\'" + pnum + "\'," + "\'" + psw + "\'," + salary + ")";
             stat.executeUpdate(inputFormat);
             System.out.println("New librarian added. Name: " + firstn + " " + lastn + " phone number: " + pnum + " Borrower_id: " + id);
@@ -465,6 +462,8 @@ public class LibraryRepository {
             }
 
             if (avil.equals("0") || !(inS)) {
+                // when not availabile or not in the system, it will print the following message
+                // and this functionality/ option will end
                 System.out.println("The book: " + titile + " is either not available or not in the system.");
 
             }
@@ -479,7 +478,7 @@ public class LibraryRepository {
                         " ask for first and last name of the borrower and enter 1) otherwise enter 0");
                 int uCBid = input.nextInt();
 
-                // the reponse of ther user
+                // the response of their user
                 String brid = "";
                 if (uCBid == 1) {
                     // gets the phone number of the borrower to check for the borrower id in the system
@@ -543,9 +542,9 @@ public class LibraryRepository {
                 String regformat = "INSERT INTO borrow_lst VALUES (\'" + id + "\',\'" + brid +
                         "\',\'" + brdate + "\',\'" + erdate + "\',\'" + retuned + "\'," + areturndate + ",\'"
                         + lbid + "\')";
-                //System.out.println(regformat);
+
                 String bokformat = "UPDATE books SET avail=0, borrow_lst_id=\'" + id + "\' WHERE title=\'" + titile + "\'";
-                //System.out.println(bokformat);
+
 
                 // Update the database
                 stat.executeUpdate(regformat);
@@ -554,6 +553,7 @@ public class LibraryRepository {
             }
             //END OF OPTION 6
         } else if (choice == 7) {
+            // OPTION 7
             // Register return
 
             // get borrower id through asking their phone number

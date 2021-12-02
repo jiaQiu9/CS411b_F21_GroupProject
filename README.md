@@ -5,6 +5,8 @@ Starting Date: Oct 23, 2021
 
 Project Description:
   This is a Library Management System that is designed for modernising and digitatlising library management. 
+  
+ Requirements: Java 15, mySql 8.0.27
 
 Setting up the software:
   Clone the repository. 

@@ -16,12 +16,7 @@ public class LibraryRepository {
 
 
             // need a new book id for the sql table
-            /*System.out.println("Enter the book id in the following format\n" +
-                    "FYYIIII, where F represents the floor, YY is the last two digits " +
-                    "of the current year, and IIII is the index of the book");
-            String book_id= input.nextLine();
-            String ckId="SELECT * FROM books WHERE book_id=\'"+book_id+"\'";
-            ResultSet resultSet=stat.executeQuery(ckId);*/
+
 
             String book_id;
             String ckId;
@@ -90,7 +85,7 @@ public class LibraryRepository {
             System.out.println("Which keyword would you like to search for, 1 for title,2 for last name of the primary author, 3 for first name of the primary author");
             int userchoice = input.nextInt();
             String format;
-            boolean inSys=false;
+            boolean inSys=false; // for storing the state of true (info in the system), false (info not in the system)
             // applying user choice
             if (userchoice == 1) {
                 // search book information based on title
@@ -131,7 +126,7 @@ public class LibraryRepository {
                 String name = input.nextLine();
                 name += input.nextLine();
                 //input.close();
-
+                // formating the information into sql query to be executed
                 format = "SELECT * FROM books WHERE author_lastn=" + "\'" + name + "\'";
                 //System.out.println(format);
                 ResultSet result = stat.executeQuery(format);
@@ -141,7 +136,7 @@ public class LibraryRepository {
                     ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
 
                     int columnsNumber = rsmd.getColumnCount();
-
+                    //printing the results if there are in the system
                     while (result.next()) {
                         for (int i = 1; i <= columnsNumber; i++) {
 

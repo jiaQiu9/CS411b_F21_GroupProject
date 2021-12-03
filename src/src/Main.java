@@ -63,14 +63,12 @@ public class Main
             Statement statement =connection.createStatement();
 
             // starting the service of this software/ program
-            //int choice;
             Scanner input=new Scanner(System.in);
             while(true){
                 // the while loop that allows the user to continuely apply functions, until they choose to end
                 // the service
                 printF();
                 System.out.print("\nPlease select the service that you want to conduct:\n");
-                //Scanner input=new Scanner(System.in);
                 int choice=input.nextInt();
 
                 System.out.println("\n");
@@ -79,7 +77,6 @@ public class Main
                     break;
                 }
                 else if (choice==1 || choice==2|| choice==3|| choice==4 || choice==5|| choice==6 || choice==7 ){
-                    //System.out.println("For the library system that interact with the database.");
                     LibraryRepository.userActions(statement,choice); // calling the functions and applying the user's choice
                 }
                 System.out.println("Please make another choice\n\n");
